@@ -27,19 +27,19 @@
             <div class="col-md-4">
                 <div class="deposit status">
                     <h5>Deposit</h5>
-                    <h2>$00</h2>
+                    <h2>$<span id="depositText">00</span></h2>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="withdraw status">
                     <h5>Withdraw</h5>
-                    <h2>$00</h2>
+                    <h2>$ <span id="withdrawText">00</span></h2>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="balance status">
                     <h5>Balance</h5>
-                    <h2>$1240</h2>
+                    <h2>$ <span id="balanceText">00</span></h2>
                 </div>
             </div>
         </div>
@@ -47,25 +47,57 @@
             <div class="col-md-6">
                 <div class="submit-area">
                     <h4>Deposit</h4>
-                    <input type="text" class="form-control" placeholder="$ amount you want to deposit">
+                    <input id="depositIn" type="text" class="form-control" placeholder="$ Amount you want to deposit">
                     <br>
-                    <button class="btn btn-success">Deposit</button>
+                    <button id="depositBtn" class="btn btn-success">Deposit</button>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="submit-area">
                     <h4>Withdraw</h4>
-                    <input type="text" class="form-control" placeholder="$ amount you want to withdraw">
+                    <input id="withdrawIn" type="text" class="form-control" placeholder="$ Amount you want to withdraw">
                     <br>
-                    <button class="btn btn-success">Withdraw</button>
+                    <button id="withdrawBtn" class="btn btn-success">Withdraw</button>
                 </div>
             </div>
         </div>
     </div>
     <script>
-        const loginBtn = document.getElementById("login").addEventListener("click",()=>{
-            document.getElementById("login-area").style.display="none";
-            document.getElementById("transaction-area").style.display="block";
+        const loginBtn = document.getElementById("login").addEventListener("click", () => {
+            document.getElementById("login-area").style.display = "none";
+            document.getElementById("transaction-area").style.display = "block";
+        })
+        //deposit handler
+        document.getElementById("depositBtn").addEventListener("click", () => {
+            const n1 = parseFloat(document.getElementById("depositIn").value);
+            const n2 = parseFloat(document.getElementById("depositText").innerText);
+            if (isNaN(n1) || isNaN(n2)) { }
+            else {
+                document.getElementById("depositText").innerText = n1 + n2;
+                document.getElementById("depositIn").value = "";
+                const b1 = parseFloat(document.getElementById("balanceText").innerText) + n1;
+                document.getElementById("balanceText").innerText = b1
+            }
+
+        })
+        // withdraw handler
+        document.getElementById("withdrawBtn").addEventListener("click", () => {
+            const n1 = parseFloat(document.getElementById("withdrawIn").value);
+            const n2 = parseFloat(document.getElementById("withdrawText").innerText);
+            if (isNaN(n1) || isNaN(n2)) { }
+            else {
+                const p1 = document.getElementById("withdrawText").innerText = n1 + n2;
+                document.getElementById("withdrawIn").value = "";
+                const b1 = parseFloat(document.getElementById("balanceText").innerText) - n1;
+                if (b1 < 0) {document.getElementById("withdrawText").innerText = n2 }
+                else {
+                    document.getElementById("balanceText").innerText = b1
+
+                }
+
+            }
+
+
         })
     </script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
